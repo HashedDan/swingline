@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "172.16.45.76:8081")
+	conn, err := net.Dial("tcp", os.Args[1]+":8081")
 	if err != nil {
 		os.Exit(1)
 	}
