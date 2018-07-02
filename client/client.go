@@ -8,15 +8,21 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", os.Args[1]+":8081")
+	conn, err := net.Dial("tcp", os.Args[1])
 	if err != nil {
 		os.Exit(1)
 	}
 
 	go func() {
 		for {
-			message, _ := bufio.NewReader(conn).ReadString('\n')
+			message, err := bufio.NewReader(conn).ReadString('\n')
+			fmt.Println()
+			if err != nil {
+				fmt.Println("TCP connection closed.")
+				os.Exit(0)
+			}
 			fmt.Print("Receiving from server: " + message)
+			fmt.Println(conn)
 		}
 	}()
 

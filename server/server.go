@@ -20,7 +20,11 @@ type Client struct {
 
 func (client *Client) Read() {
 	for {
-		message, _ := client.reader.ReadString('\n')
+		message, err := client.reader.ReadString('\n')
+		fmt.Println(len(clientNodes))
+		if err != nil {
+			return
+		}
 		fmt.Print("From client "+client.address.String()+": ", string(message))
 		for node := range clientNodes {
 			if node.address != client.address {
@@ -63,6 +67,7 @@ func main() {
 	clientNodes = make(map[*Client]net.Addr)
 	fmt.Println("Server starting...")
 	ln, _ := net.Listen("tcp", ":8081")
+	defer ln.Close()
 
 	for {
 		conn, err := ln.Accept()
