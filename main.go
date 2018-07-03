@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"net"
 	"os"
 )
@@ -65,8 +66,15 @@ func CreateClient(conn net.Conn) *Client {
 
 func main() {
 	clientNodes = make(map[*Client]net.Addr)
+
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+
 	fmt.Println("Server starting...")
-	ln, _ := net.Listen("tcp", ":8081")
+	ln, _ := net.Listen("tcp", ":"+port)
 	defer ln.Close()
 
 	for {
