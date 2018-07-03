@@ -1,1 +1,1 @@
-web: server/server.go --port $PORT
+web: server --port $PORT
