@@ -8,10 +8,13 @@ import (
 )
 
 func main() {
+	fmt.Println(os.Args[1])
 	conn, err := net.Dial("tcp", os.Args[1])
 	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Println("Connected!")
 
 	go func() {
 		for {
